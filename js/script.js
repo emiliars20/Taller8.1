@@ -19,3 +19,20 @@ function showData(dataArray) {
 }
 
 // Escribe el código necesario para realizar el fetch al archivo con los datos y mostrar los estudiantes con la función showData
+fetch(DATA_URL)
+.then((res) =>{
+  console.log(res);
+  return res.ok? res.json(): Promise.reject(res); //esto hace que: si la respuesta es ok manda un rest.json y sino rechaza la promesa
+})
+.then(data => {
+  // Acceso al array students dentro de data 
+  const students = data.students;
+  showData(students); // Paso students array para la funcion showData
+})
+.catch((err) => {
+  console.log(err);
+  let message = err.statusText || "Ocurrió un error";
+  container.innerHTML = `Error ${err.status}: ${message}`;
+})
+.finally(() => 
+  console.log('Esto se ejecutará independientemente del resultado de la Promesa Fetch')); //por poner algo
